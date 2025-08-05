@@ -1,0 +1,287 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  /* subtle gradient background using brand colors */
+  background: linear-gradient(135deg, #e3e9fc 0%, #f9f9f9 100%);
+  color: #333;
+}
+
+/* Container */
+.api-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #FAFAFA;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(49, 17, 243, 0.15); /* blue-ish shadow */
+}
+
+/* Title */
+.api-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333 ; /* company blue */
+  font-weight: 700;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-btn {
+  padding: 10px 16px;
+  background: #d5d5d5;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  color: #2318a1 ;
+  font-weight: 600;
+}
+
+.tab-btn.active {
+  background: #2318a1; /* brand blue */
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 0 8px 3px rgba(42, 29, 190, 0.5); /* blue shadow directly behind */
+}
+
+.tab-btn:hover:not(.active) {
+  background: #ddd9f7; /* light blue tint */
+}
+
+/* API block */
+.api-block {
+  background: #FFFFFF;
+  padding: 16px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border-left: 5px solid #2113be ; /* blue left border */
+  box-shadow: 0 1px 5px rgba(49, 17, 243, 0.1);
+}
+
+/* Run button */
+.run-btn {
+  margin-top: 10px;
+  background: #FF7800; /* orange */
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(255, 120, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.run-btn:hover {
+  background: #e06c00;
+}
+
+/* Custom panel */
+.custom-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background: #eef2ff; /* very light blue */
+  border-radius: 8px;
+  border: 1px solid #2318a1 ;
+}
+
+/* Inputs */
+.input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #2318a1 ;
+  font-size: 1rem;
+  width: 100%;
+  color: #333;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+/* Results */
+.result {
+  margin-top: 12px;
+  background: #fff3cd; /* soft yellow */
+  padding: 10px;
+  border-radius: 6px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+  border: 1px solid #FF7800;
+}
+
+.result pre {
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Export Button */
+.export-btn {
+  margin-top: 25px;
+  background: #2318a1 ; /* blue */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(49, 17, 243, 0.5);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.export-btn:hover {
+  background: #1a0ed7;
+  transform: translateY(-1px);
+}
+
+/* Analytics Section */
+.analytics-section {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 2rem;
+  color: #333;
+}
+
+.analytics-section h3 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #333 ;
+}
+
+.analytics-table-container {
+  overflow-x: auto; /* allow horizontal scroll on small screens */
+  margin-top: 2.5rem;
+  width: 100%;
+  border-radius: 7px;
+}
+
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 12px rgba(49, 17, 243, 0.2);
+}
+
+.analytics-table thead {
+  background-color: #2318a1 ; /* primary brand blue */
+  color: white;
+}
+
+.analytics-table thead th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.95rem;
+  user-select: none;
+}
+
+.analytics-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.3s ease;
+}
+
+.analytics-table tbody tr:hover {
+  background-color: #dbe4ff; /* light blue highlight */
+}
+
+.analytics-table tbody tr.result-pass {
+  background-color: #d9f0d9; /* very light green */
+}
+
+.analytics-table tbody tr.result-fail {
+  background-color: #fce8e8; /* very light red */
+}
+
+.analytics-table tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.analytics-table tbody td.center {
+  text-align: center;
+  font-weight: 700;
+  color: #333 ;
+}
+
+.analytics-table tbody td.snippet {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: block;               /* ⬅️ allows long content inside */
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.api-button.export-button {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  background: #2318a1 ; /* blue */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(49, 17, 243, 0.5);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.api-button.export-button:hover {
+  background: #1a0ed7;
+  transform: translateY(-1px);
+}
+/* Icons */
+.pass-icon i {
+  color: #38a169; /* green */
+  margin-left: 6px;
+}
+
+.fail-icon i {
+  color: #e53e3e; /* red */
+  margin-left: 6px;
+}
+
+.pass-icon,
+.fail-icon {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.logo-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.omantel-logo {
+  height: 30px;
+  width: auto;
+}
+
+.omantel-logo2 {
+  height: 30px;
+  width: auto;
+}
+
+.section-divider {
+  border: none;
+  border-top: 2px solid #ccc;
+  margin: 24px 0;
+}
