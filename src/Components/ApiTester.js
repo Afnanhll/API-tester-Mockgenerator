@@ -283,10 +283,9 @@ const createMockApi = async () => {
         </div>
       )}
 
-      <DashboardAnalytics results={results} customHistory={customHistory}/>
       <hr className="section-divider" />
 
-      {/* ✅ Show mock API only when custom tab is active */}
+    {/* ✅ Show mock API only when custom tab is active */}
       {activeTab === 'custom' && (
         <div className="custom-panel">
           <h2>🛠️ Generate Mock API</h2>
@@ -325,6 +324,7 @@ const createMockApi = async () => {
           )}
         </div>
       )}
+      <DashboardAnalytics results={results} customHistory={customHistory}/>
     </div>
   );
 }
