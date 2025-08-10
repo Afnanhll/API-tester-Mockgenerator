@@ -31,7 +31,8 @@ export default function ApiTester() {
   const [mockLoading, setMockLoading] = useState(false);
   const [generatedMockUrl, setGeneratedMockUrl] = useState('');
   const [mockBodyPreview, setMockBodyPreview] = useState('');
-const [customHistory, setCustomHistory] = useState([]);
+  const [customHistory, setCustomHistory] = useState([]);
+  const [showMockCopiedMessage, setShowMockCopiedMessage] = useState(false);
 
 
   const updateResult = (category, apiName, newResult) => {
@@ -283,10 +284,10 @@ const createMockApi = async () => {
         </div>
       )}
 
-      <hr className="section-divider" />
-
     {/* ✅ Show mock API only when custom tab is active */}
       {activeTab === 'custom' && (
+        <>
+        <hr className="section-divider" />
         <div className="custom-panel">
           <h2>🛠️ Generate Mock API</h2>
           <textarea
@@ -314,15 +315,24 @@ const createMockApi = async () => {
                   setCustomUrl(generatedMockUrl);
                   setCustomMethod('GET');
                   setCustomBody('');
-                  alert('Mock API copied to Custom API tester.');
+                  setShowMockCopiedMessage(true);
                 }}
                 className="export-btn"
               >
                 Use in Custom API Tester
               </button>
+              {/* wrapper forces a break (new "line") even if parent is flex */}
+              {showMockCopiedMessage && (
+                <div className="mock-copied-alert-wrapper">
+                  <div className="mock-copied-alert">
+                    ✅ Mock API copied to Custom API tester.
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
+        </>
       )}
       <DashboardAnalytics results={results} customHistory={customHistory}/>
     </div>

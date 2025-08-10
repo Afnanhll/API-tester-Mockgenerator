@@ -23,26 +23,28 @@ body {
   margin-bottom: 30px;
   color: #333 ; /* company blue */
   font-weight: 700;
+  font-size: 2.5rem;
 }
 
 /* Tabs */
 .tabs {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 14px;              /* slightly bigger gap */
+  margin-bottom: 24px;    /* more space below */
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .tab-btn {
-  padding: 10px 16px;
+  padding: 12px 18px;    /* a bit smaller padding */
   background: #d5d5d5;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
-  color: #2318a1 ;
-  font-weight: 600;
+  color: #2318a1;
+  font-weight: 700;
+  font-size: 1rem;       /* slightly smaller font */
 }
 
 .tab-btn.active {
@@ -284,4 +286,53 @@ body {
   border: none;
   border-top: 2px solid #ccc;
   margin: 24px 0;
+}
+
+.mock-copied-alert {
+  display: inline-block;         /* shrink to text size */
+  background-color: #d1e7dd;
+  color: #0f5132;
+  padding: 10px 16px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #badbcc;
+  font-size: 0.95rem;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;           /* keep text on one line */
+}
+
+.mock-copied-alert-wrapper {
+  width: 100%;                   /* forces it to a new line */
+}
+
+.kpi-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap; /* Responsive wrap on small screens */
+}
+
+.kpi-card {
+  background: #eef2ff;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(49, 17, 243, 0.15);
+  min-width: 180px;
+  text-align: center;
+  font-weight: 700;
+  color: #2318a1;
+  font-size: 1.15rem;
+  user-select: none;
+}
+
+.kpi-card.success-ratio {
+  background: #d1e7dd;
+  box-shadow: 0 2px 6px rgba(56, 161, 105, 0.25);
+  color: #0f5132;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  margin-top: 4px;
 }
