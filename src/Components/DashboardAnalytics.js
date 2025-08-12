@@ -42,40 +42,37 @@ export default function DashboardAnalytics({ results, customHistory }) {
     let list = [];
     Object.entries(results).forEach(([category, apis]) => {
       apis.forEach((api) => {
-list.push({
-  category,
-  name: api.name,
-  status: api.status,
-  success: api.success,
-  error: api.error || '',
-  dataSnippet: api.success
-    ? JSON.stringify(api.data)
-    : '',
-  correlationId: api.correlationId || '', // ✅ Fix: add this
-});
-
+        list.push({
+          category,
+          name: api.name,
+          status: api.status,
+          success: api.success,
+          error: api.error || '',
+          dataSnippet: api.displayBody
+            ? JSON.stringify(api.displayBody)
+            : (api.success ? JSON.stringify(api.data) : ''),
+          correlationId: api.correlationId || '',
+        });
       });
     });
 
     // ✅ Include Custom API test history
     customHistory.forEach((api) => {
-list.push({
-  category: 'Custom',
-  name: `${api.method} ${api.name}`,
-  status: api.status,
-  success: api.success,
-  error: api.error || '',
-  dataSnippet: api.success
-    ? JSON.stringify(api.data)
-    : '',
-  correlationId: api.correlationId || '', // ✅ Fix: add this
-});
-
+      list.push({
+        category: 'Custom',
+        name: `${api.method} ${api.name}`,
+        status: api.status,
+        success: api.success,
+        error: api.error || '',
+        dataSnippet: api.displayBody
+          ? JSON.stringify(api.displayBody)
+          : (api.success ? JSON.stringify(api.data) : ''),
+        correlationId: api.correlationId || '',
+      });
     });
 
     return list;
   }, [results, customHistory]);
-
 
   const data = {
     labels: totalCounts.map((d) => d.category),
@@ -105,54 +102,54 @@ list.push({
     },
   };
 
-const downloadPDF = async () => {
-  try {
-    const chartCanvas = chartRef.current.canvas;
-    const chartImg = chartCanvas.toDataURL('image/png');
+  const downloadPDF = async () => {
+    try {
+      const chartCanvas = chartRef.current.canvas;
+      const chartImg = chartCanvas.toDataURL('image/png');
 
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    pdf.setFontSize(18);
-    pdf.setTextColor(33, 33, 33);
-    pdf.text('API Test Analytics Report', 10, 15);
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      pdf.setFontSize(18);
+      pdf.setTextColor(33, 33, 33);
+      pdf.text('API Test Analytics Report', 10, 15);
 
-    // Chart image at top
-    pdf.addImage(chartImg, 'PNG', 10, 20, 190, 80); // height ~80mm
+      // Chart image at top
+      pdf.addImage(chartImg, 'PNG', 10, 20, 190, 80); // height ~80mm
 
-    // Table starts below the chart
-    autoTable(pdf, {
-      startY: 105, // starts just below chart
-      head: [['Category', 'API Name', 'Status Code', 'Result', 'Error / Snippet','Correlation ID']],
-      body: allApis.map(api => [
-        api.category,
-        api.name,
-        api.status,
-        api.success ? 'PASS' : 'FAIL',
-        api.success ? api.dataSnippet : api.error,
-        api.correlationId || ''
-      ]),
-      styles: {
-        fontSize: 8,
-        cellPadding: 2,
-        overflow: 'linebreak',
-      },
-      headStyles: {
-        fillColor: [35, 24, 161],
-        textColor: 255,
-        fontStyle: 'bold'
-      },
-      bodyStyles: {
-        textColor: 50
-      }
-    });
+      // Table starts below the chart
+      autoTable(pdf, {
+        startY: 105, // starts just below chart
+        head: [['Category', 'API Name', 'Status Code', 'Result', 'Error / Snippet', 'Correlation ID']],
+        body: allApis.map(api => [
+          api.category,
+          api.name,
+          api.status,
+          api.success ? 'PASS' : 'FAIL',
+          api.dataSnippet,
+          api.correlationId || ''
+        ]),
+        styles: {
+          fontSize: 8,
+          cellPadding: 2,
+          overflow: 'linebreak',
+        },
+        headStyles: {
+          fillColor: [35, 24, 161],
+          textColor: 255,
+          fontStyle: 'bold'
+        },
+        bodyStyles: {
+          textColor: 50
+        }
+      });
 
-    pdf.save('api-test-report.pdf');
-  } catch (err) {
-    console.error('Failed to generate PDF:', err);
-    alert('Error generating PDF. See console for details.');
-  }
-};
+      pdf.save('api-test-report.pdf');
+    } catch (err) {
+      console.error('Failed to generate PDF:', err);
+      alert('Error generating PDF. See console for details.');
+    }
+  };
 
-const exportToExcel = () => {
+  const exportToExcel = () => {
     const rows = [];
     Object.entries(results).forEach(([category, apis]) => {
       apis.forEach(api => {
@@ -161,8 +158,10 @@ const exportToExcel = () => {
           'API Name': api.name,
           'Status Code': api.status,
           Result: api.success ? 'PASS' : 'FAIL',
-          'Response / Error': api.success ? JSON.stringify(api.data) : api.error,
-           'Correlation ID': api.correlationId || '',
+          'Response / Error': api.displayBody
+            ? JSON.stringify(api.displayBody)
+            : (api.success ? JSON.stringify(api.data) : api.error),
+          'Correlation ID': api.correlationId || '',
         });
       });
     });
@@ -180,16 +179,16 @@ const exportToExcel = () => {
       <h3>API Test Analytics</h3>
 
       {totalCounts.length > 0 && (
-      <div style={{ width: 600, height: 300 }}>
-        <Bar
-          ref={chartRef}
-          data={data}
-          options={options}
-          width={600}
-          height={300}
-        />
-      </div>
-    )}
+        <div style={{ width: 600, height: 300 }}>
+          <Bar
+            ref={chartRef}
+            data={data}
+            options={options}
+            width={600}
+            height={300}
+          />
+        </div>
+      )}
 
       <div className="analytics-table-container">
         <table className="analytics-table">
@@ -226,8 +225,9 @@ const exportToExcel = () => {
                         FAIL&nbsp;<i className="fa fa-times-circle" aria-hidden="true"></i>
                       </span>
                     )}
-                  </td>                  <td className="snippet">{api.success ? api.dataSnippet : api.error}</td>
-                      <td>{api.correlationId || 'N/A'}</td> 
+                  </td>
+                  <td className="snippet">{api.dataSnippet}</td>
+                  <td>{api.correlationId || 'N/A'}</td>
                 </tr>
               ))
             )}
